@@ -2,20 +2,64 @@ import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { useCartDrawer } from "@/components/store/cartDrawerState";
 import logo from "@/assets/logo.png";
 
-const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "Shop All", to: "/shop" },
-  { label: "Mens", to: "/shop", search: { collection: "mens", q: undefined } },
-  { label: "Woman", to: "/shop", search: { collection: "woman", q: undefined } },
-  { label: "Unisex", to: "/shop", search: { collection: "unisex", q: undefined } },
-  { label: "Contact", to: "/contact" },
-] as const;
+function NavLinks({ className = "" }: { className?: string }) {
+  return (
+    <>
+      <Link
+        to="/"
+        activeProps={{ className: "active" }}
+        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
+      >
+        Home
+      </Link>
+      <Link
+        to="/shop"
+        activeProps={{ className: "active" }}
+        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
+      >
+        Shop All
+      </Link>
+      <Link
+        to="/shop"
+        search={{ collection: "mens", q: undefined }}
+        activeOptions={{ exact: false }}
+        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
+      >
+        Mens
+      </Link>
+      <Link
+        to="/shop"
+        search={{ collection: "woman", q: undefined }}
+        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
+      >
+        Woman
+      </Link>
+      <Link
+        to="/shop"
+        search={{ collection: "unisex", q: undefined }}
+        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
+      >
+        Unisex
+      </Link>
+      <Link
+        to="/contact"
+        activeProps={{ className: "active" }}
+        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
+      >
+        Contact
+      </Link>
+    </>
+  );
+}
 
 export function Header() {
-  const totalItems = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0));
-  const openCart = useCartStore.getState;
+  const totalItems = useCartStore((s) =>
+    s.items.reduce((sum, i) => sum + i.quantity, 0),
+  );
+  const setOpen = useCartDrawer((s) => s.setOpen);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -23,7 +67,10 @@ export function Header() {
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchOpen(false);
-    navigate({ to: "/shop", search: { q: searchTerm || undefined, collection: undefined } });
+    navigate({
+      to: "/shop",
+      search: { q: searchTerm || undefined, collection: undefined },
+    });
     setSearchTerm("");
   };
 
@@ -31,44 +78,32 @@ export function Header() {
     <>
       {/* Announcement bar */}
       <div className="relative bg-primary py-2 text-primary-foreground">
-        <button
-          aria-label="Previous announcement"
+        <span
+          aria-hidden
           className="absolute left-3 top-1/2 -translate-y-1/2 opacity-70"
-          tabIndex={-1}
         >
           <ChevronLeft className="h-4 w-4" />
-        </button>
+        </span>
         <p className="text-center font-display text-sm font-semibold tracking-wide">
           Your Favorites Are Just A Click Away
         </p>
-        <button
-          aria-label="Next announcement"
+        <span
+          aria-hidden
           className="absolute right-3 top-1/2 -translate-y-1/2 opacity-70"
-          tabIndex={-1}
         >
           <ChevronRight className="h-4 w-4" />
-        </button>
+        </span>
       </div>
 
       {/* Header */}
-      <header className="border-b border-border bg-background">
-        <div className="mx-auto flex h-[64px] max-w-7xl items-center justify-between px-4">
+      <header className="sticky top-0 z-40 border-b border-border bg-background">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <Link to="/" className="flex items-center" aria-label="BR NOIR home">
             <img src={logo} alt="BR NOIR" className="h-12 w-auto" />
           </Link>
 
           <nav className="hidden items-center gap-6 md:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                search={"search" in link ? link.search : undefined}
-                className="text-[15px] text-foreground hover:text-foreground [&.active]:underline [&.active]:underline-offset-4"
-                activeProps={{ className: "active" }}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <NavLinks />
           </nav>
 
           <div className="flex items-center gap-4">
@@ -79,37 +114,39 @@ export function Header() {
             >
               <Search className="h-5 w-5" strokeWidth={1.5} />
             </button>
-            <button aria-label="Account" className="text-foreground hover:opacity-70">
+            <button
+              aria-label="Account"
+              className="hidden text-foreground hover:opacity-70 sm:block"
+            >
               <User className="h-5 w-5" strokeWidth={1.5} />
             </button>
             <button
-              aria-label="Cart"
-              onClick={() => openCart().setState({} as never) /* replaced below */}
-              className="hidden"
-            />
-            <CartButton count={totalItems} />
+              aria-label="Open cart"
+              onClick={() => setOpen(true)}
+              className="relative text-foreground hover:opacity-70"
+            >
+              <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
+              {totalItems > 0 && (
+                <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
+                  {totalItems}
+                </span>
+              )}
+            </button>
           </div>
         </div>
 
         {/* Mobile nav */}
-        <nav className="flex flex-wrap items-center gap-4 border-t border-border px-4 py-3 md:hidden">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              search={"search" in link ? link.search : undefined}
-              className="text-sm text-foreground [&.active]:underline"
-              activeProps={{ className: "active" }}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border px-4 py-3 md:hidden">
+          <NavLinks className="text-sm" />
         </nav>
 
         {/* Search panel */}
         {searchOpen && (
           <div className="border-t border-border bg-background px-4 py-3">
-            <form onSubmit={submitSearch} className="mx-auto flex max-w-xl items-center gap-2">
+            <form
+              onSubmit={submitSearch}
+              className="mx-auto flex max-w-xl items-center gap-2"
+            >
               <Search className="h-4 w-4 text-muted-foreground" />
               <input
                 autoFocus
@@ -118,7 +155,11 @@ export function Header() {
                 placeholder="Search products…"
                 className="h-10 flex-1 rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-1 focus:ring-ring"
               />
-              <button type="button" aria-label="Close search" onClick={() => setSearchOpen(false)}>
+              <button
+                type="button"
+                aria-label="Close search"
+                onClick={() => setSearchOpen(false)}
+              >
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             </form>
@@ -126,26 +167,5 @@ export function Header() {
         )}
       </header>
     </>
-  );
-}
-
-// Cart icon with item-count badge; opens the cart drawer via the store flag.
-import { useCartDrawer } from "@/components/store/cartDrawerState";
-
-function CartButton({ count }: { count: number }) {
-  const setOpen = useCartDrawer((s) => s.setOpen);
-  return (
-    <button
-      aria-label="Open cart"
-      onClick={() => setOpen(true)}
-      className="relative text-foreground hover:opacity-70"
-    >
-      <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
-      {count > 0 && (
-        <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
-          {count}
-        </span>
-      )}
-    </button>
   );
 }
