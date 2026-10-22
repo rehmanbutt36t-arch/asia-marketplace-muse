@@ -33,9 +33,9 @@ export const Route = createFileRoute("/")({
 });
 
 const COLLECTIONS = [
-  { label: "Mens", image: collectionMens, search: { collection: "mens", q: undefined } },
-  { label: "Woman", image: collectionWoman, search: { collection: "woman", q: undefined } },
-  { label: "Unisex", image: collectionUnisex, search: { collection: "unisex", q: undefined } },
+  { label: "Mens", image: collectionMens, search: { collection: "mens" } },
+  { label: "Woman", image: collectionWoman, search: { collection: "woman" } },
+  { label: "Unisex", image: collectionUnisex, search: { collection: "unisex" } },
 ];
 
 const BADGES = [

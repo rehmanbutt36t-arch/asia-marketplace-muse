@@ -135,7 +135,7 @@ export function CartDrawer() {
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold">Estimated total</span>
                 <span className="text-xl font-bold">
-                  {currency} {totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  {formatMoney({ amount: String(totalPrice), currencyCode: currency })}
                 </span>
               </div>
               <p className="text-center text-xs text-muted-foreground">

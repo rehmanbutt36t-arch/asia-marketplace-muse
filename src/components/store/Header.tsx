@@ -24,7 +24,7 @@ function NavLinks({ className = "" }: { className?: string }) {
       </Link>
       <Link
         to="/shop"
-        search={{ collection: "mens", q: undefined }}
+        search={{ collection: "mens" }}
         activeOptions={{ exact: false }}
         className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
       >
@@ -32,14 +32,14 @@ function NavLinks({ className = "" }: { className?: string }) {
       </Link>
       <Link
         to="/shop"
-        search={{ collection: "woman", q: undefined }}
+        search={{ collection: "woman" }}
         className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
       >
         Woman
       </Link>
       <Link
         to="/shop"
-        search={{ collection: "unisex", q: undefined }}
+        search={{ collection: "unisex" }}
         className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
       >
         Unisex
@@ -69,7 +69,7 @@ export function Header() {
     setSearchOpen(false);
     navigate({
       to: "/shop",
-      search: { q: searchTerm || undefined, collection: undefined },
+      search: searchTerm ? { q: searchTerm } : {},
     });
     setSearchTerm("");
   };

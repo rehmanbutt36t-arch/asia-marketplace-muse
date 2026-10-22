@@ -15,24 +15,23 @@ const COLLECTION_LABELS: Record<string, string> = {
 };
 
 function validateSearch(search: Record<string, unknown>): ShopSearch {
-  return {
-    collection:
-      typeof search.collection === "string" ? search.collection : undefined,
-    q: typeof search.q === "string" ? search.q : undefined,
-  };
+  const out: ShopSearch = {};
+  if (typeof search["collection"] === "string") out.collection = search["collection"];
+  if (typeof search["q"] === "string") out.q = search["q"];
+  return out;
 }
 
 function buildVariables(search: ShopSearch) {
-  const query = search.collection
-    ? `tag:${search.collection}`
-    : search.q || undefined;
-  return { first: 24, query };
+  const query = search.collection ? `tag:${search.collection}` : search.q;
+  return { first: 24, ...(query ? { query } : {}) };
 }
 
 export const Route = createFileRoute("/shop")({
   validateSearch,
-  loader: ({ context, search }) =>
-    context.queryClient.ensureQueryData(productsQueryOptions(buildVariables(search))),
+  loader: ({ context, location }) =>
+    context.queryClient.ensureQueryData(
+      productsQueryOptions(buildVariables(validateSearch(location.search))),
+    ),
   head: () => ({
     meta: [
       { title: "Shop — BR NOIR Luxury Perfumes" },
