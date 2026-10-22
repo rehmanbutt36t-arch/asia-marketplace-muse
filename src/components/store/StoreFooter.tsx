@@ -116,7 +116,6 @@ export function StoreFooter() {
                 <li key={link.label}>
                   <Link
                     to={link.to}
-                    search={undefined}
                     className="text-sm text-muted-foreground hover:text-foreground hover:underline"
                   >
                     {link.label}
