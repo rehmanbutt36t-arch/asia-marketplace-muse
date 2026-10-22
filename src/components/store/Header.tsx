@@ -1,54 +1,42 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X, Menu } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartDrawer } from "@/components/store/cartDrawerState";
 import logo from "@/assets/logo.png";
 
-function NavLinks({ className = "" }: { className?: string }) {
+function NavLinks({
+  className = "",
+  onNavigate,
+}: {
+  className?: string;
+  onNavigate?: () => void;
+}) {
+  const linkCls = `text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`;
   return (
     <>
-      <Link
-        to="/"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Home
       </Link>
-      <Link
-        to="/shop"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/shop" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Shop All
       </Link>
       <Link
         to="/shop"
         search={{ collection: "mens" }}
         activeOptions={{ exact: false }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
+        onClick={onNavigate}
+        className={linkCls}
       >
         Mens
       </Link>
-      <Link
-        to="/shop"
-        search={{ collection: "woman" }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
-      >
+      <Link to="/shop" search={{ collection: "woman" }} onClick={onNavigate} className={linkCls}>
         Woman
       </Link>
-      <Link
-        to="/shop"
-        search={{ collection: "unisex" }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
-      >
+      <Link to="/shop" search={{ collection: "unisex" }} onClick={onNavigate} className={linkCls}>
         Unisex
       </Link>
-      <Link
-        to="/contact"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/contact" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Contact
       </Link>
     </>
