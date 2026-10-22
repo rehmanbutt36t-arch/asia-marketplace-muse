@@ -49,6 +49,7 @@ export function Header() {
   );
   const setOpen = useCartDrawer((s) => s.setOpen);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
