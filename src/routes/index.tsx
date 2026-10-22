@@ -79,7 +79,22 @@ function Index() {
 
       {/* Badge strip */}
       <section className="bg-primary py-3">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-2 px-4">
+        {/* Mobile: sliding marquee */}
+        <div className="flex overflow-hidden md:hidden">
+          <div className="marquee-track flex shrink-0 items-center gap-10 pr-10">
+            {[...BADGES, ...BADGES].map(({ icon: Icon, label }, i) => (
+              <span
+                key={`${label}-${i}`}
+                className="flex shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary-foreground"
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+        {/* Desktop: static centered row */}
+        <div className="mx-auto hidden max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-2 px-4 md:flex">
           {BADGES.map(({ icon: Icon, label }) => (
             <span
               key={label}
