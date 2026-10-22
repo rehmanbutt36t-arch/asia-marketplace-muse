@@ -139,10 +139,12 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile nav */}
-        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border px-4 py-3 md:hidden">
-          <NavLinks className="text-sm" />
-        </nav>
+        {/* Mobile menu panel */}
+        {menuOpen && (
+          <nav className="flex flex-col border-t border-border px-4 py-3 md:hidden">
+            <NavLinks className="text-sm py-2" onNavigate={() => setMenuOpen(false)} />
+          </nav>
+        )}
 
         {/* Search panel */}
         {searchOpen && (
