@@ -86,8 +86,23 @@ export function Header() {
 
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border bg-background">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center" aria-label="BR NOIR home">
+        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+          {/* Mobile hamburger */}
+          <button
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="text-foreground hover:opacity-70 md:hidden"
+          >
+            {menuOpen ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
+          </button>
+
+          {/* Centered logo on mobile, left on desktop */}
+          <Link
+            to="/"
+            aria-label="BR NOIR home"
+            className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex md:items-center"
+          >
             <img src={logo} alt="BR NOIR" className="h-12 w-auto" />
           </Link>
 
