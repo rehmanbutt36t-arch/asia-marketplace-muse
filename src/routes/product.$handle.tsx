@@ -21,28 +21,28 @@ export const Route = createFileRoute("/product/$handle")({
       meta: [
         {
           title: product ? `${product.title} — BR NOIR` : "Product — BR NOIR",
-          ...(product?.description
-            ? { name: "description", content: product.description.slice(0, 160) }
-            : {}),
-          ...(product
-            ? { property: "og:title", content: product.title }
-            : {}),
-          ...(product?.description
-            ? {
+        },
+        ...(product?.description
+          ? [{ name: "description", content: product.description.slice(0, 160) }]
+          : []),
+        ...(product ? [{ property: "og:title", content: product.title }] : []),
+        ...(product?.description
+          ? [
+              {
                 property: "og:description",
                 content: product.description.slice(0, 160),
-              }
-            : {}),
-          { property: "og:type", content: "website" },
-          { name: "twitter:card", content: "summary_large_image" },
-          ...(image
-            ? [
-                { property: "og:image", content: image },
-                { name: "twitter:image", content: image },
-              ]
-            : []),
-        ],
-      },
+              },
+            ]
+          : []),
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        ...(image
+          ? [
+              { property: "og:image", content: image },
+              { name: "twitter:image", content: image },
+            ]
+          : []),
+      ],
     };
   },
   component: ProductPage,
