@@ -1,54 +1,42 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X, Menu } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartDrawer } from "@/components/store/cartDrawerState";
 import logo from "@/assets/logo.png";
 
-function NavLinks({ className = "" }: { className?: string }) {
+function NavLinks({
+  className = "",
+  onNavigate,
+}: {
+  className?: string;
+  onNavigate?: () => void;
+}) {
+  const linkCls = `text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`;
   return (
     <>
-      <Link
-        to="/"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Home
       </Link>
-      <Link
-        to="/shop"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/shop" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Shop All
       </Link>
       <Link
         to="/shop"
         search={{ collection: "mens" }}
         activeOptions={{ exact: false }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
+        onClick={onNavigate}
+        className={linkCls}
       >
         Mens
       </Link>
-      <Link
-        to="/shop"
-        search={{ collection: "woman" }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
-      >
+      <Link to="/shop" search={{ collection: "woman" }} onClick={onNavigate} className={linkCls}>
         Woman
       </Link>
-      <Link
-        to="/shop"
-        search={{ collection: "unisex" }}
-        className={`text-[15px] text-foreground hover:opacity-80 ${className}`}
-      >
+      <Link to="/shop" search={{ collection: "unisex" }} onClick={onNavigate} className={linkCls}>
         Unisex
       </Link>
-      <Link
-        to="/contact"
-        activeProps={{ className: "active" }}
-        className={`text-[15px] text-foreground hover:opacity-80 [&.active]:underline [&.active]:underline-offset-4 ${className}`}
-      >
+      <Link to="/contact" activeProps={{ className: "active" }} onClick={onNavigate} className={linkCls}>
         Contact
       </Link>
     </>
@@ -61,6 +49,7 @@ export function Header() {
   );
   const setOpen = useCartDrawer((s) => s.setOpen);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
@@ -97,8 +86,23 @@ export function Header() {
 
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border bg-background">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center" aria-label="BR NOIR home">
+        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+          {/* Mobile hamburger */}
+          <button
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="text-foreground hover:opacity-70 md:hidden"
+          >
+            {menuOpen ? <X className="h-6 w-6" strokeWidth={1.5} /> : <Menu className="h-6 w-6" strokeWidth={1.5} />}
+          </button>
+
+          {/* Centered logo on mobile, left on desktop */}
+          <Link
+            to="/"
+            aria-label="BR NOIR home"
+            className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex md:items-center"
+          >
             <img src={logo} alt="BR NOIR" className="h-12 w-auto" />
           </Link>
 
@@ -135,10 +139,12 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile nav */}
-        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border px-4 py-3 md:hidden">
-          <NavLinks className="text-sm" />
-        </nav>
+        {/* Mobile menu panel */}
+        {menuOpen && (
+          <nav className="flex flex-col border-t border-border px-4 py-3 md:hidden">
+            <NavLinks className="text-sm py-2" onNavigate={() => setMenuOpen(false)} />
+          </nav>
+        )}
 
         {/* Search panel */}
         {searchOpen && (
