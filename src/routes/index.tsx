@@ -64,8 +64,26 @@ const PERKS = [
   },
 ];
 
+const REVIEWS = [
+  { name: "Ayesha K. — Lahore", text: "Fantastic service and a product that looks even better in person." },
+  { name: "Bilal R. — Karachi", text: "Original packaging, fast delivery and the fragrance lasts all day." },
+  { name: "Sana M. — Islamabad", text: "Ordered for my husband — he loved it. Will definitely order again." },
+  { name: "Hamza T. — Faisalabad", text: "Great prices for luxury perfumes. Cash on delivery made it so easy." },
+  { name: "Zainab A. — Multan", text: "The scent is exactly as described. Packaging was premium and secure." },
+  { name: "Usman S. — Rawalpindi", text: "Second order already. Delivery was quick and everything was sealed." },
+];
+
 function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions({ first: 8 }));
+  const [reviewIndex, setReviewIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(
+      () => setReviewIndex((i) => (i + 1) % REVIEWS.length),
+      5000,
+    );
+    return () => clearInterval(t);
+  }, []);
 
   return (
     <main>
