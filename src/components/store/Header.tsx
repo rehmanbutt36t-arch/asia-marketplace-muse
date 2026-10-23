@@ -5,6 +5,12 @@ import { useCartStore } from "@/stores/cartStore";
 import { useCartDrawer } from "@/components/store/cartDrawerState";
 import logo from "@/assets/logo.png";
 
+const ANNOUNCEMENTS = [
+  "Your Favorites Are Just A Click Away",
+  "Free Delivery On Orders Over Rs 5,000",
+  "Delivery All Over Pakistan",
+];
+
 function NavLinks({
   className = "",
   onNavigate,
