@@ -28,22 +28,28 @@ const inputCls =
   "h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-1 focus:ring-ring";
 
 function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  interface ContactForm {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+  }
+  const [form, setForm] = useState<ContactForm>({ name: "", email: "", phone: "", message: "" });
+  const [errors, setErrors] = useState<Partial<ContactForm>>({});
 
   const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [key]: e.target.value }));
-    setErrors((er) => ({ ...er, [key]: "" }));
+    setErrors((er) => ({ ...er, [key]: "" }) as Partial<ContactForm>);
   };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const next: Record<string, string> = {};
+    const next: Partial<ContactForm> = {};
     if (form.name.trim().length < 2) next.name = "Please enter your name";
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) next.email = "Please enter a valid email";
     if (!/^[+\d][\d\s-]{7,14}$/.test(form.phone.trim())) next.phone = "Please enter a valid phone number";
     if (form.message.trim().length < 10) next.message = "Please write your message (at least 10 characters)";
-    setErrors(next);
+    setErrors(next as Partial<ContactForm>);
     if (Object.keys(next).length > 0) return;
 
     const subject = encodeURIComponent(`Message from ${form.name.trim()} — BR NOIR`);
