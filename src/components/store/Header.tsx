@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Search, User, ShoppingBag, ChevronLeft, ChevronRight, X, Menu } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { useCartDrawer } from "@/components/store/cartDrawerState";
 import logo from "@/assets/logo.png";
+
+const ANNOUNCEMENTS = [
+  "Your Favorites Are Just A Click Away",
+  "Free Delivery On Orders Over Rs 5,000",
+  "Delivery All Over Pakistan",
+];
 
 function NavLinks({
   className = "",
@@ -51,7 +57,16 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setInterval(
+      () => setAnnouncementIndex((i) => (i + 1) % ANNOUNCEMENTS.length),
+      4000,
+    );
+    return () => clearInterval(t);
+  }, []);
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +80,7 @@ export function Header() {
 
   return (
     <>
-      {/* Announcement bar */}
+      {/* Announcement bar — rotating messages */}
       <div className="relative bg-primary py-2 text-primary-foreground">
         <span
           aria-hidden
@@ -73,8 +88,11 @@ export function Header() {
         >
           <ChevronLeft className="h-4 w-4" />
         </span>
-        <p className="text-center font-display text-sm font-semibold tracking-wide">
-          Your Favorites Are Just A Click Away
+        <p
+          key={announcementIndex}
+          className="fade-swap text-center font-display text-sm font-semibold tracking-wide"
+        >
+          {ANNOUNCEMENTS[announcementIndex]}
         </p>
         <span
           aria-hidden

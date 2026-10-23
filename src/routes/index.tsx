@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones } from "lucide-react";
@@ -63,8 +64,27 @@ const PERKS = [
   },
 ];
 
+const REVIEWS = [
+  { name: "Ayesha K. — Lahore", text: "Fantastic service and a product that looks even better in person." },
+  { name: "Bilal R. — Karachi", text: "Original packaging, fast delivery and the fragrance lasts all day." },
+  { name: "Sana M. — Islamabad", text: "Ordered for my husband — he loved it. Will definitely order again." },
+  { name: "Hamza T. — Faisalabad", text: "Great prices for luxury perfumes. Cash on delivery made it so easy." },
+  { name: "Zainab A. — Multan", text: "The scent is exactly as described. Packaging was premium and secure." },
+  { name: "Usman S. — Rawalpindi", text: "Second order already. Delivery was quick and everything was sealed." },
+];
+
 function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions({ first: 8 }));
+  const [reviewIndex, setReviewIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(
+      () => setReviewIndex((i) => (i + 1) % REVIEWS.length),
+      5000,
+    );
+    return () => clearInterval(t);
+  }, []);
+  const review = REVIEWS[reviewIndex] ?? REVIEWS[0]!;
 
   return (
     <main>
@@ -112,20 +132,20 @@ function Index() {
         <h2 className="text-center font-display text-3xl font-medium md:text-4xl">
           Shop collections
         </h2>
-        <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-6 sm:flex-row">
+        <div className="mx-auto mt-8 grid max-w-3xl grid-cols-3 items-stretch justify-center gap-2 sm:flex sm:gap-6">
           {COLLECTIONS.map((c) => (
             <Link
               key={c.label}
               to="/shop"
               search={c.search}
-              className="w-full max-w-[220px] overflow-hidden rounded-2xl bg-secondary text-center shadow-sm transition-shadow hover:shadow-md"
+              className="overflow-hidden rounded-xl bg-secondary text-center shadow-sm transition-shadow hover:shadow-md sm:max-w-[220px] sm:rounded-2xl"
             >
               <img
                 src={c.image}
                 alt={`${c.label} collection`}
                 className="aspect-[220/223] w-full object-cover"
               />
-              <span className="block bg-secondary py-2.5 text-sm font-medium">
+              <span className="block bg-secondary py-2 text-xs font-medium sm:py-2.5 sm:text-sm">
                 {c.label}
               </span>
             </Link>
@@ -202,22 +222,22 @@ function Index() {
         </div>
       </section>
 
-      {/* Testimonial */}
+      {/* Testimonials — rotating */}
       <section className="mx-auto max-w-7xl px-4 pb-20">
         <h2 className="text-center font-display text-3xl font-medium md:text-4xl">
           What our customers say
         </h2>
         <div className="mx-auto mt-8 max-w-2xl rounded-2xl bg-primary px-8 py-12 text-center text-primary-foreground">
-          <div className="flex justify-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-5 w-5 fill-gold text-gold" />
-            ))}
+          <div key={reviewIndex} className="fade-swap">
+            <div className="flex justify-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-gold text-gold" />
+              ))}
+            </div>
+            <p className="mt-5 text-lg">{review.text}</p>
+            <p className="mt-5 font-semibold">{review.name}</p>
+            <p className="mt-1 text-sm opacity-80">Verified customer</p>
           </div>
-          <p className="mt-5 text-lg">
-            Fantastic service and a product that looks even better in person.
-          </p>
-          <p className="mt-5 font-semibold">A happy customer</p>
-          <p className="mt-1 text-sm opacity-80">Verified customer</p>
         </div>
       </section>
     </main>

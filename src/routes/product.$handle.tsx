@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Minus, Plus, Loader2 } from "lucide-react";
+import { Minus, Plus, Loader2, HandCoins, RotateCcw, Truck, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import {
   formatMoney,
@@ -207,6 +207,20 @@ function ProductPage() {
               ? "In stock — ready to ship"
               : "Currently out of stock"}
           </p>
+
+          <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl border border-border bg-card p-4 sm:grid-cols-4">
+            {[
+              { icon: HandCoins, label: "Cash on Delivery" },
+              { icon: Truck, label: "Delivery All Over Pakistan" },
+              { icon: ShieldCheck, label: "100% Original & Sealed" },
+              { icon: RotateCcw, label: "7-Day Easy Returns" },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex flex-col items-center gap-1.5 text-center">
+                <Icon className="h-5 w-5 text-primary" strokeWidth={1.5} />
+                <span className="text-xs font-medium leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
 
           {product.description && (
             <div className="mt-8 border-t border-border pt-6">
