@@ -51,7 +51,16 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setInterval(
+      () => setAnnouncementIndex((i) => (i + 1) % ANNOUNCEMENTS.length),
+      4000,
+    );
+    return () => clearInterval(t);
+  }, []);
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
