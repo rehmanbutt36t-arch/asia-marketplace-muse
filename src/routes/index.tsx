@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones } from "lucide-react";
@@ -202,22 +203,22 @@ function Index() {
         </div>
       </section>
 
-      {/* Testimonial */}
+      {/* Testimonials — rotating */}
       <section className="mx-auto max-w-7xl px-4 pb-20">
         <h2 className="text-center font-display text-3xl font-medium md:text-4xl">
           What our customers say
         </h2>
         <div className="mx-auto mt-8 max-w-2xl rounded-2xl bg-primary px-8 py-12 text-center text-primary-foreground">
-          <div className="flex justify-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-5 w-5 fill-gold text-gold" />
-            ))}
+          <div key={reviewIndex} className="fade-swap">
+            <div className="flex justify-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-5 w-5 fill-gold text-gold" />
+              ))}
+            </div>
+            <p className="mt-5 text-lg">{REVIEWS[reviewIndex].text}</p>
+            <p className="mt-5 font-semibold">{REVIEWS[reviewIndex].name}</p>
+            <p className="mt-1 text-sm opacity-80">Verified customer</p>
           </div>
-          <p className="mt-5 text-lg">
-            Fantastic service and a product that looks even better in person.
-          </p>
-          <p className="mt-5 font-semibold">A happy customer</p>
-          <p className="mt-1 text-sm opacity-80">Verified customer</p>
         </div>
       </section>
     </main>
