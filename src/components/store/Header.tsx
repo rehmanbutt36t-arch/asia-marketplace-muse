@@ -65,7 +65,7 @@ export function Header() {
 
   return (
     <>
-      {/* Announcement bar */}
+      {/* Announcement bar — rotating messages */}
       <div className="relative bg-primary py-2 text-primary-foreground">
         <span
           aria-hidden
@@ -73,8 +73,11 @@ export function Header() {
         >
           <ChevronLeft className="h-4 w-4" />
         </span>
-        <p className="text-center font-display text-sm font-semibold tracking-wide">
-          Your Favorites Are Just A Click Away
+        <p
+          key={announcementIndex}
+          className="fade-swap text-center font-display text-sm font-semibold tracking-wide"
+        >
+          {ANNOUNCEMENTS[announcementIndex]}
         </p>
         <span
           aria-hidden
