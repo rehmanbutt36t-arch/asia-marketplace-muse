@@ -112,20 +112,20 @@ function Index() {
         <h2 className="text-center font-display text-3xl font-medium md:text-4xl">
           Shop collections
         </h2>
-        <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-6 sm:flex-row">
+        <div className="mx-auto mt-8 grid max-w-3xl grid-cols-3 items-stretch justify-center gap-2 sm:flex sm:gap-6">
           {COLLECTIONS.map((c) => (
             <Link
               key={c.label}
               to="/shop"
               search={c.search}
-              className="w-full max-w-[220px] overflow-hidden rounded-2xl bg-secondary text-center shadow-sm transition-shadow hover:shadow-md"
+              className="overflow-hidden rounded-xl bg-secondary text-center shadow-sm transition-shadow hover:shadow-md sm:max-w-[220px] sm:rounded-2xl"
             >
               <img
                 src={c.image}
                 alt={`${c.label} collection`}
                 className="aspect-[220/223] w-full object-cover"
               />
-              <span className="block bg-secondary py-2.5 text-sm font-medium">
+              <span className="block bg-secondary py-2 text-xs font-medium sm:py-2.5 sm:text-sm">
                 {c.label}
               </span>
             </Link>
