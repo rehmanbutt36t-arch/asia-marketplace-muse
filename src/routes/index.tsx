@@ -84,6 +84,7 @@ function Index() {
     );
     return () => clearInterval(t);
   }, []);
+  const review = REVIEWS[reviewIndex] ?? REVIEWS[0]!;
 
   return (
     <main>
@@ -233,8 +234,8 @@ function Index() {
                 <Star key={i} className="h-5 w-5 fill-gold text-gold" />
               ))}
             </div>
-            <p className="mt-5 text-lg">{REVIEWS[reviewIndex].text}</p>
-            <p className="mt-5 font-semibold">{REVIEWS[reviewIndex].name}</p>
+            <p className="mt-5 text-lg">{review.text}</p>
+            <p className="mt-5 font-semibold">{review.name}</p>
             <p className="mt-1 text-sm opacity-80">Verified customer</p>
           </div>
         </div>
