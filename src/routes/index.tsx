@@ -80,7 +80,7 @@ function HeroContent() {
       <img
         src={logo}
         alt="BR NOIR — Luxury Perfumes"
-        className="mx-auto w-32 sm:w-40 md:w-48"
+        className="mx-auto w-32 mix-blend-multiply sm:w-40 md:w-48"
       />
       <div className="mx-auto mt-2 flex max-w-[240px] items-center gap-3">
         <span className="h-px flex-1 bg-gold/60" />
