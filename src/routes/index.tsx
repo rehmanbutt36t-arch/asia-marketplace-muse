@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones } from "lucide-react";
+import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones, ShieldCheck } from "lucide-react";
 import { productsQueryOptions } from "@/lib/shopify";
 import { ProductCard } from "@/components/store/ProductCard";
-import heroImage from "@/assets/hero.jpg";
+import heroBanner from "@/assets/hero-banner.jpg";
+import logo from "@/assets/logo.png";
 import collectionMens from "@/assets/collection-mens.jpg";
 import collectionWoman from "@/assets/collection-woman.jpg";
 import collectionUnisex from "@/assets/collection-unisex.jpg";
