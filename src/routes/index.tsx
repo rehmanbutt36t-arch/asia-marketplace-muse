@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones, ShieldCheck } from "lucide-react";
+import { Truck, Clock, Star, HandCoins, BadgeCheck, Headphones } from "lucide-react";
 import { productsQueryOptions } from "@/lib/shopify";
 import { ProductCard } from "@/components/store/ProductCard";
-import heroBanner from "@/assets/hero-banner.jpg";
-import logo from "@/assets/logo.png";
+import heroStill from "@/assets/hero-still-life.webp.asset.json";
 import collectionMens from "@/assets/collection-mens.jpg";
 import collectionWoman from "@/assets/collection-woman.jpg";
 import collectionUnisex from "@/assets/collection-unisex.jpg";
@@ -74,45 +73,6 @@ const REVIEWS = [
   { name: "Usman S. — Rawalpindi", text: "Second order already. Delivery was quick and everything was sealed." },
 ];
 
-function HeroContent() {
-  return (
-    <div className="text-center">
-      <img
-        src={logo}
-        alt="BR NOIR — Luxury Perfumes"
-        className="mx-auto w-32 mix-blend-multiply sm:w-40 md:w-48"
-      />
-      <div className="mx-auto mt-2 flex max-w-[240px] items-center gap-3">
-        <span className="h-px flex-1 bg-gold/60" />
-        <span className="h-1.5 w-1.5 rotate-45 bg-gold/70" />
-        <span className="h-px flex-1 bg-gold/60" />
-      </div>
-      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.25em] text-foreground/80 sm:text-xs">
-        Timeless Scents &bull; Modern You
-      </p>
-      <p className="mt-1.5 text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs">
-        Mens &bull; Woman &bull; Unisex Perfumes
-      </p>
-      <div className="mx-auto mt-4 inline-flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-full bg-primary px-4 py-2.5 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground sm:px-6 sm:text-[11px]">
-        <span className="flex items-center gap-1.5">
-          <BadgeCheck className="h-3.5 w-3.5" />
-          100% Original
-        </span>
-        <span className="hidden h-3.5 w-px bg-primary-foreground/30 sm:block" />
-        <span className="flex items-center gap-1.5">
-          <ShieldCheck className="h-3.5 w-3.5" />
-          Premium Quality
-        </span>
-        <span className="hidden h-3.5 w-px bg-primary-foreground/30 sm:block" />
-        <span className="flex items-center gap-1.5">
-          <Truck className="h-3.5 w-3.5" />
-          Fast &amp; Reliable
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions({ first: 8 }));
   const [reviewIndex, setReviewIndex] = useState(0);
@@ -130,30 +90,20 @@ function Index() {
     <main>
       {/* Hero */}
       <section>
-        {/* Mobile — text overlaid on the banner, like the reference */}
-        <div className="relative md:hidden">
+        {/* Mobile — tall crop of the banner; collections peek below the fold */}
+        <div className="relative aspect-[16/15] overflow-hidden md:hidden">
           <img
-            src={heroBanner}
+            src={heroStill.url}
             alt="BR NOIR Luxury Perfumes — timeless scents, modern you"
-            className="w-full"
-          />
-          <div className="absolute inset-x-0 top-0 px-4 pt-6">
-            <HeroContent />
-          </div>
-        </div>
-        {/* Desktop — text beside the banner */}
-        <div className="hidden md:grid md:grid-cols-2 md:items-stretch">
-          <div className="flex items-center px-10 py-12 lg:px-16">
-            <div className="w-full">
-              <HeroContent />
-            </div>
-          </div>
-          <img
-            src={heroBanner}
-            alt="BR NOIR Luxury Perfumes"
-            className="h-[620px] w-full object-cover object-bottom"
+            className="h-full w-full object-cover object-[21%_center]"
           />
         </div>
+        {/* Desktop — full-width banner */}
+        <img
+          src={heroStill.url}
+          alt="BR NOIR Luxury Perfumes — timeless scents, modern you"
+          className="hidden w-full md:block"
+        />
       </section>
 
       {/* Badge strip */}
