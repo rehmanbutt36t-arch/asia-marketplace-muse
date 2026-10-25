@@ -90,30 +90,20 @@ function Index() {
     <main>
       {/* Hero */}
       <section>
-        {/* Mobile — text overlaid on the banner, like the reference */}
-        <div className="relative md:hidden">
+        {/* Mobile — tall crop of the banner; collections peek below the fold */}
+        <div className="relative aspect-[16/15] overflow-hidden md:hidden">
           <img
-            src={heroBanner}
+            src={heroStill.url}
             alt="BR NOIR Luxury Perfumes — timeless scents, modern you"
-            className="w-full"
-          />
-          <div className="absolute inset-x-0 top-0 px-4 pt-6">
-            <HeroContent />
-          </div>
-        </div>
-        {/* Desktop — text beside the banner */}
-        <div className="hidden md:grid md:grid-cols-2 md:items-stretch">
-          <div className="flex items-center px-10 py-12 lg:px-16">
-            <div className="w-full">
-              <HeroContent />
-            </div>
-          </div>
-          <img
-            src={heroBanner}
-            alt="BR NOIR Luxury Perfumes"
-            className="h-[620px] w-full object-cover object-bottom"
+            className="h-full w-full object-cover object-[21%_center]"
           />
         </div>
+        {/* Desktop — full-width banner */}
+        <img
+          src={heroStill.url}
+          alt="BR NOIR Luxury Perfumes — timeless scents, modern you"
+          className="hidden w-full md:block"
+        />
       </section>
 
       {/* Badge strip */}
