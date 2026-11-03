@@ -289,9 +289,7 @@ function ProductPage() {
 
           {product.description && (
             <div className="mt-8 border-t border-border pt-6">
-              <p className="whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">
-                {product.description}
-              </p>
+              <DescriptionBlocks text={product.description} />
             </div>
           )}
         </div>
