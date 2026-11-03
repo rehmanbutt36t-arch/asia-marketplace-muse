@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Minus, Plus, Loader2, HandCoins, RotateCcw, Truck, ShieldCheck } from "lucide-react";
+import { Minus, Plus, Loader2, HandCoins, RotateCcw, Truck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 import {
   formatMoney,
@@ -208,11 +208,17 @@ function ProductPage() {
               : "Currently out of stock"}
           </p>
 
+          <p className="mt-4 rounded-lg border border-border bg-card px-4 py-3 text-sm leading-relaxed text-foreground/80">
+            ℹ️ <strong>Inspired fragrance:</strong> this is an inspired
+            perfume, not the original branded product — premium quality with
+            sealed packing, delivered all over Pakistan.
+          </p>
+
           <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl border border-border bg-card p-4 sm:grid-cols-4">
             {[
               { icon: HandCoins, label: "Cash on Delivery" },
               { icon: Truck, label: "Delivery All Over Pakistan" },
-              { icon: ShieldCheck, label: "100% Original & Sealed" },
+              { icon: BadgeCheck, label: "Premium Quality & Sealed" },
               { icon: RotateCcw, label: "7-Day Easy Returns" },
             ].map(({ icon: Icon, label }) => (
               <div key={label} className="flex flex-col items-center gap-1.5 text-center">
@@ -224,7 +230,7 @@ function ProductPage() {
 
           {product.description && (
             <div className="mt-8 border-t border-border pt-6">
-              <p className="leading-relaxed text-foreground/90">
+              <p className="whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">
                 {product.description}
               </p>
             </div>
