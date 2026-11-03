@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Minus, Plus, Loader2, HandCoins, RotateCcw, Truck, ShieldCheck } from "lucide-react";
+import { Minus, Plus, Loader2, HandCoins, RotateCcw, Truck, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 import {
   formatMoney,
