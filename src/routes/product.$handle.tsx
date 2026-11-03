@@ -208,6 +208,12 @@ function ProductPage() {
               : "Currently out of stock"}
           </p>
 
+          <p className="mt-4 rounded-lg border border-border bg-card px-4 py-3 text-sm leading-relaxed text-foreground/80">
+            ℹ️ <strong>Inspired fragrance:</strong> ye ek inspired perfume hai,
+            original branded perfume nahi — premium quality aur sealed packing
+            ke sath.
+          </p>
+
           <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl border border-border bg-card p-4 sm:grid-cols-4">
             {[
               { icon: HandCoins, label: "Cash on Delivery" },
