@@ -9,3 +9,6 @@
 - [x] Shipping & refund policies: full detailed copy
 - [x] Rotating customer reviews (auto-change, multiple reviews)
 - [x] Rotating announcement bar: "Free delivery over Rs 5,000 shopping", "Delivery all over Pakistan"
+- [ ] Product pages: full A-to-Z details with emoji headings (inspired-perfume disclosure), fix image spacing
+- [ ] Remove "Edit with Lovable" badge
+- [ ] SEO review: fresh scan → present findings → fix on approval → realistic ranking advice
