@@ -48,6 +48,65 @@ export const Route = createFileRoute("/product/$handle")({
   component: ProductPage,
 });
 
+// Renders the emoji-structured Shopify description as clean A-to-Z sections.
+function DescriptionBlocks({ text }: { text: string }) {
+  const sections = text
+    .split(/(?=[📌🌸⏳🧴🎁🚚💰🔁✅]|Order now)/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (sections.length <= 1) {
+    return (
+      <p className="whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">
+        {text}
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <h2 className="font-display text-xl font-semibold leading-snug">
+        {sections[0]}
+      </h2>
+      {sections.slice(1).map((section, i) => {
+        if (section.startsWith("Order now")) {
+          return (
+            <p key={i} className="pt-1 font-semibold text-[15px]">
+              {section}
+            </p>
+          );
+        }
+        const first = [...section][0]!;
+        const body = Array.from(section).slice(1).join("").trim();
+        if (first === "🌸") {
+          const parts = body.split("•").map((s) => s.trim()).filter(Boolean);
+          return (
+            <div key={i}>
+              <p className="font-semibold text-[15px]">{first} {parts[0]}</p>
+              <ul className="mt-1.5 space-y-1">
+                {parts.slice(1).map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="flex gap-2 text-[15px] leading-relaxed text-foreground/90"
+                  >
+                    <span className="text-primary">•</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        return (
+          <p key={i} className="text-[15px] leading-relaxed text-foreground/90">
+            <span className="font-medium">{first}</span> {body}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 function ProductPage() {
   const { handle } = Route.useParams();
   const { data: product } = useSuspenseQuery(productQueryOptions(handle));
@@ -230,9 +289,7 @@ function ProductPage() {
 
           {product.description && (
             <div className="mt-8 border-t border-border pt-6">
-              <p className="whitespace-pre-line text-[15px] leading-relaxed text-foreground/90">
-                {product.description}
-              </p>
+              <DescriptionBlocks text={product.description} />
             </div>
           )}
         </div>
