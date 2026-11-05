@@ -241,12 +241,12 @@ function ProductContent({ product }: { product: NonNullable<ShopifyProduct> }) {
               </button>
             ))}
           </div>
-          <div className="relative flex-1 overflow-hidden rounded-2xl bg-secondary">
+          <div className="relative aspect-square flex-1 overflow-hidden rounded-2xl bg-secondary md:aspect-auto">
             {mainImage && (
               <img
                 src={mainImage.url}
                 alt={mainImage.altText ?? product.title}
-                className="aspect-square w-full object-cover"
+                className="h-full w-full object-cover"
               />
             )}
             <div className="absolute left-4 top-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-b from-gold to-primary shadow-lg">
