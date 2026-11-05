@@ -18,6 +18,7 @@ import {
   formatMoney,
   productQueryOptions,
   productsQueryOptions,
+  type ShopifyProduct,
   type ShopifyVariant,
 } from "@/lib/shopify";
 import { getProductDetails } from "@/lib/productDetails";
@@ -164,7 +165,7 @@ function ProductPage() {
   return <ProductContent product={product} />;
 }
 
-function ProductContent({ product }: { product: NonNullable<ShopifyProductType> }) {
+function ProductContent({ product }: { product: NonNullable<ShopifyProduct> }) {
   const addItem = useCartStore((state) => state.addItem);
   const isLoading = useCartStore((state) => state.isLoading);
   const setDrawerOpen = useCartDrawer((s) => s.setOpen);
@@ -240,12 +241,12 @@ function ProductContent({ product }: { product: NonNullable<ShopifyProductType> 
               </button>
             ))}
           </div>
-          <div className="relative flex-1 overflow-hidden rounded-2xl bg-secondary">
+          <div className="relative aspect-square flex-1 overflow-hidden rounded-2xl bg-secondary md:aspect-auto">
             {mainImage && (
               <img
                 src={mainImage.url}
                 alt={mainImage.altText ?? product.title}
-                className="aspect-square w-full object-cover"
+                className="h-full w-full object-cover"
               />
             )}
             <div className="absolute left-4 top-4 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-b from-gold to-primary shadow-lg">
