@@ -18,6 +18,7 @@ import {
   formatMoney,
   productQueryOptions,
   productsQueryOptions,
+  type ShopifyProduct,
   type ShopifyVariant,
 } from "@/lib/shopify";
 import { getProductDetails } from "@/lib/productDetails";
@@ -164,7 +165,7 @@ function ProductPage() {
   return <ProductContent product={product} />;
 }
 
-function ProductContent({ product }: { product: NonNullable<ShopifyProductType> }) {
+function ProductContent({ product }: { product: NonNullable<ShopifyProduct> }) {
   const addItem = useCartStore((state) => state.addItem);
   const isLoading = useCartStore((state) => state.isLoading);
   const setDrawerOpen = useCartDrawer((s) => s.setOpen);
