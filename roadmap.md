@@ -12,3 +12,4 @@
 - [ ] Product pages: full A-to-Z details with emoji headings (inspired-perfume disclosure), fix image spacing
 - [ ] Remove "Edit with Lovable" badge
 - [ ] SEO review: fresh scan → present findings → fix on approval → realistic ranking advice
+- [ ] Replace sample product reviews with customer-submitted reviews stored in Lovable Cloud and shown according to the user's moderation choice
