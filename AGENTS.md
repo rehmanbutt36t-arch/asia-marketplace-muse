@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Store review data
+- Persist customer-submitted reviews in Lovable Cloud and display only submitted review records; never present invented testimonials as customer reviews.
